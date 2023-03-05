@@ -99,11 +99,11 @@ visualmap_opts=opts.VisualMapOpts()
 |       type_       | 映射过渡类型，可选，"color", "size"                          |
 |    min_ / max_    | 指定 visualMapPiecewise 组件的最小/最大值                    |
 |    range_text     | 两端的文本，如['High', 'Low']                                |
-|   is_piecewise    | 是否为分段型，默认为False                                    |
-|   split_number    | 连续型数据，自动平均切分成几段。默认为5段。连续数据的范围需要 max 和 min 来指定 |
 |    range_color    | visualMap 组件过渡颜色                                       |
 |    range_size     | visualMap 组件过渡 symbol 大小                               |
 |   range_opacity   | visualMap 图元以及其附属物（如文字标签）的透明度             |
+|   is_piecewise    | 是否为分段型，默认为False                                    |
+|   split_number    | 连续型数据，自动平均切分成几段。默认为5段。连续数据的范围需要 max 和 min 来指定 |
 |      orient       | 放置 visualMap 组件，水平（'horizontal'）或者竖直（'vertical'） |
 | item_width/height | 图形的宽度/高度，即长条的宽度、高度                          |
 |    is_inverse     | 是否反转 visualMap 组件，默认为 False                        |
@@ -261,8 +261,8 @@ label_opts=opts.LabelOpts() ---标签配置项
 |      color       | 文字的颜色。# 如果设置为 'auto'，则为视觉映射得到的颜色，如系列色。 |
 |     position     | 标签的位置，'top'，'left'，'right'，'bottom'，'center ','inside' |
 |     distance     | 距离图形元素的距离。（如 'top'、'insideRight'）时候有效。    |
-|    font_style    | 文字字体的风格                                               |
-|   font_weight    | 文字字体的粗细                                               |
+|    font_style    | 文字字体的风格      \# 文字字体的风格，可选：    # 'normal'，'italic'，'oblique' |
+|   font_weight    | 文字字体的粗细      \# 文字字体的粗细，可选：    # 'normal'，'bold'，'bolder'，'lighter' |
 |      rotate      | 标签旋转。从 -90 度到 90 度。正值是逆时针。                  |
 |      margin      | 刻度标签与轴线之间的距离，数值越大离坐标轴越远               |
 | horizontal_align | 文字水平对齐方式，默认自动。'left'，'center'，'right'        |
@@ -315,6 +315,17 @@ opts.MarkPointItem() --- 标记点数据项
 |     coord      | 标注的坐标。坐标格式视系列的坐标系而定,也可以是极坐标系上的 radius, angle |
 |     symbol     | 标记的图形:circle, rect, roundRect, triangle,圆形、矩形、圆形矩形、三角形 |
 | itemstyle_opts | 标记点样式配置项                                             |
+
+
+
+###### 分割线配置项
+
+SplitLineOpts()
+
+| 参数           | 描述                        |
+| -------------- | --------------------------- |
+| is_show        | 是否显示分割    默认为False |
+| linestyle_opts | 线风格配置项                |
 
 
 
