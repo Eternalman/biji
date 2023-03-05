@@ -179,6 +179,10 @@ x/y axis_opts=opts.AxisOpts()
 
 ###### 坐标轴轴线配置项
 
+全局配置中设置
+
+x/yaxis_opts=opts.AxisOpts(axisline_opts=)
+
 | 参数               | 说明                                                         |
 | ------------------ | ------------------------------------------------------------ |
 | is_show            | 是否显示坐标轴线                                             |
@@ -191,6 +195,8 @@ x/y axis_opts=opts.AxisOpts()
 
 ###### 坐标轴刻度配置项
 
+x/yaxis_opts=opts.AxisOpts(axisline_opts=)
+
 | 参数                | 说明                                                         |
 | ------------------- | ------------------------------------------------------------ |
 | is_show             | 是否显示坐标轴刻度                                           |
@@ -202,6 +208,8 @@ x/y axis_opts=opts.AxisOpts()
 
 
 ###### 坐标轴指示配置项
+
+x/yaxis_opts=opts.AxisOpts(axispointer_opts=)
 
 | 参数           | 说明                                                         |
 | -------------- | ------------------------------------------------------------ |
@@ -626,3 +634,18 @@ add()
 | 图元样式配置项          | 图元样式配置项                    |
 | emphasis_label_opts     | 高亮标签配置项                    |
 | emphasis_itemstyle_opts | 高亮图元样式配置项                |
+
+### 效果篇
+
+#### x/y轴的网格线(分割线)
+
+在全局配置中设置，坐标轴配置项中使用splitline_opts
+
+```py
+.set_global_opts(
+xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True))#显示x轴分割线
+
+yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True))#显示y轴分割线
+)
+```
+
