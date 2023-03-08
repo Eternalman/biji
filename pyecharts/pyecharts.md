@@ -45,7 +45,9 @@ title_opts=opts.TitleOpts() ---标题配置项
 |  title_textstyle_opts   | 表示主标题字体样式配置项--系列配置 |
 | subtitle_textstyle_opts | 表示副标题字体样式配置项--系列配置 |
 
+![10](图\10.png)
 
+------
 
 ###### 图列配置项
 
@@ -66,7 +68,9 @@ legend_opts=opts.LegendOpts()
 | selected_mode    | 图例选择的模式，控制是否可以通过点击图例改变系列的显示状态，false关闭，single、multiple(单项、多选) |
 | textstyle_opts   | 图例组件字体样式                                             |
 
+![11](图\11.png)
 
+------
 
 ###### 提示框的配置项
 
@@ -118,7 +122,7 @@ visualmap_opts=opts.VisualMapOpts()
 |   out_of_range    | 定义 在选中范围外 的视觉元素。（用户可以和 visualMap 组件交互，用鼠标或触摸选择范围） |
 |  textstyle_opts   | 文字样式配置项                                               |
 
-
+![12](图\12.png)
 
 ###### 区域缩放配置项
 
@@ -140,6 +144,8 @@ datazoom_opts=opts.DataZoomOpts()
 | filter_mode    | 当前数据窗口外的数据，被过滤掉                               |
 
 
+
+------
 
 ###### 坐标轴配置项
 
@@ -175,7 +181,9 @@ x/y axis_opts=opts.AxisOpts()
 | minor_split_line_opts | 坐标轴在 grid 区域中的次分隔线。次分割线会对齐次刻度线 minorTick |
 |                       |                                                              |
 
+![13](图\13.png)
 
+------
 
 ###### 坐标轴轴线配置项
 
@@ -207,19 +215,21 @@ x/yaxis_opts=opts.AxisOpts(axisline_opts=)
 
 
 
+
+
+------
+
 ###### 坐标轴指示配置项
 
-x/yaxis_opts=opts.AxisOpts(axispointer_opts=)
+全局配置项设置
 
-| 参数           | 说明                                                         |
-| -------------- | ------------------------------------------------------------ |
-| is_show        | 默认显示坐标轴指示器                                         |
-| type_          | 指示器类型；'line' 直线指示器 、'shadow' 阴影指示器、'none' 无指示器 |
-| label          | 坐标轴指示器的文本标签，坐标轴标签配置项                     |
-| linestyle_opts | 坐标轴线风格配置项                                           |
-| link           | 同轴的 axisPointer 可以进行联动，在这里设置                  |
+```py
+axispointer_opts=opts.SplitLineOpts(is_show=True)
+```
 
+![8](图\8.png)
 
+------
 
 ###### 工具箱配置项
 
@@ -235,7 +245,9 @@ toolbox_opts=opts.ToolboxOpts()
 | pos_bottom | 工具栏组件离容器下侧的距离。                                 |
 |  feature   | 各工具配置项，feature=opts.ToolBoxFeatureOpts()              |
 
+![14](C:\Users\admin\Desktop\笔记\pyecharts\图\14.png)
 
+------
 
 ###### 工具箱各工具配置项
 
@@ -335,9 +347,35 @@ SplitLineOpts()
 | is_show        | 是否显示分割    默认为False |
 | linestyle_opts | 线风格配置项                |
 
+------
 
+###### 坐标轴指示配置项
 
-### 组合组件(Grid)
+x/yaxis_opts=opts.AxisOpts(axispointer_opts=) # 只能设置单列的指示
+
+| 参数           | 说明                                                         |
+| -------------- | ------------------------------------------------------------ |
+| is_show        | 默认显示坐标轴指示器                                         |
+| type_          | 指示器类型；'line' 直线指示器 、'shadow' 阴影指示器、'none' 无指示器 |
+| label          | 坐标轴指示器的文本标签，坐标轴标签配置项                     |
+| linestyle_opts | 坐标轴线风格配置项                                           |
+| link           | 同轴的 axisPointer 可以进行联动，在这里设置                  |
+
+![9](C:\Users\admin\Desktop\笔记\pyecharts\图\9.png)
+
+### 组合组件
+
+#### Overlap
+
+```py
+data_all = bar.overlap(line).render_embed()
+```
+
+![6](C:\Users\admin\Desktop\笔记\pyecharts\图\6.png)
+
+------
+
+#### Grid
 
 ```py
 bar_pie =(Grid(init_opts=opts.InitOpts(width='950px', height='600px'))
@@ -346,7 +384,32 @@ bar_pie =(Grid(init_opts=opts.InitOpts(width='950px', height='600px'))
     return render(request,'bar_pie.html',{'bar_pie':bar_pie})
 ```
 
+------
 
+![3](图\3.png)
+
+------
+
+#### Page
+
+```py
+bar_pies = (Page(page_title="Page绘制顺序多图", interval=1,
+                 layout=Page.DraggablePageLayout).add(bar, pie1, pie2)).render_embed()
+```
+
+![4](图\4.png)
+
+------
+
+#### Tab
+
+```py
+tab = Tab().add(radar, '雷达图1').add(radar1, '雷达图2').render_embed()
+```
+
+![5](C:\Users\admin\Desktop\笔记\pyecharts\图\5.png)
+
+------
 
 ### HTML篇
 
@@ -593,6 +656,40 @@ add()
 
 
 
+![2](C:\Users\admin\Desktop\笔记\pyecharts\图\2.png)
+
+对于以上数据建议使用一下方法
+
+```py
+# 方法一：
+data = pd.read_csv('../pyecharts/数据集/球员.csv', index_col=0)# 将姓名列作为索引
+
+def shuju(x):
+	return [int(data[col].loc[x]) for col in ['传球', '射门', '身体', '防守', '速度', '盘带']]
+# 将data数据集中的'传球', '射门', '身体', '防守', '速度', '盘带'这6个指标在行索引为x的行的数据取出来，并将它们转换为整数类型，然后构建成一个包含6个整数的列表
+
+# 方法二：
+
+a1 = data['传球']
+a2 = data['射门']
+a3 = data['身体']
+a4 = data['防守']
+a5 = data['速度']
+a6 = data['盘带']
+
+def shuju(x):
+    b1 = a1.loc[x]
+    b2 = a2.loc[x]
+    b3 = a3.loc[x]
+    b4 = a4.loc[x]
+    b5 = a5.loc[x]
+    b6 = a6.loc[x]
+    return [int(b1), int(b2), int(b3), int(b4), int(b5), int(b6)]
+# 这种方法是比较简单易懂的，但是比较繁琐
+```
+
+
+
 #### 词云图(Worclou)
 
 add()
@@ -648,4 +745,8 @@ xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True))#显示
 yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True))#显示y轴分割线
 )
 ```
+
+![7](图\7.png)
+
+------
 

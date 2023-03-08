@@ -221,6 +221,30 @@ df.drop([1, 2]).head()
 #drop()：同上，这是一个 Pandas 函数，用于删除数据框中的某些行或列。
 
 #[1, 2]：这是一个列表，指定了您要删除的行的索引。
+
+
+```
+
+
+
+##### 删除列
+
+```py
+# 删除第1列
+data.drop('column_name', axis=1, inplace=True)
+
+# 删除多列
+data.drop(['column_name_1', 'column_name_2'], axis=1, inplace=True)
+
+# 根据条件删除列，例如删除'Sales'列中值为0的列
+data.drop('Sales', axis=1, inplace=True)
+
+```
+
+#### 重置索引
+
+```py
+data = data.reset_index(drop=True)  # 重置索引
 ```
 
 
@@ -275,7 +299,16 @@ print(df['country'].value_counts())
 
 以上实现其实仅适用于计数统计这种 特定需求，对于其他的聚合统计是不能满足的
 
-##### 二、groupby+count
+##### 二、groupby
+
+使用groupby()进行多条件聚合
+
+```py
+data.groupby(['name','xit'])['age'].mean()
+
+```
+
+##### 三、groupby+count
 
 分组后对指定列聚合，在这种形式中依据country分组后只提取name一列，相当于每个country下对应了一个由多个name组成的series，而后的count即为对这个series进行count
 
@@ -309,7 +342,7 @@ print(df.groupby('country').count())
 	魏           2    2
 ```
 
-##### 三、groupby+agg
+##### 四、groupby+agg
 
 agg函数主要接收两个参数，第一个参数func用于接收聚合算子，可以是一个函数名或对象，也可以是一个函数列表，还可以是一个字典，使用方法很是灵活；
 
@@ -343,7 +376,7 @@ agg内接收聚合函数字典，其中key为列名，value为聚合函数或函
 
 ![1](图\1.png)
 
-![2](C:\Users\Administrator\Desktop\pandas\图\2.webp)
+![2](图\2.webp)
 
 agg内接收新列名+元组，实现对指定列聚合并重命名。
 
@@ -351,7 +384,7 @@ agg内接收新列名+元组，实现对指定列聚合并重命名。
 
 ![3](图\3.webp)
 
-##### 四、groupby+apply
+##### 五、groupby+apply
 
  在上述方法中，groupby('country')后的结果，实际上是得到了一个DataFrameGroupBy对象，实际上是一组(key, value)的集合，其中每个key对应country列中的一种取值，每个value为该key对应的一个子dataframe
 
@@ -372,7 +405,7 @@ print(df.groupby('country').apply(lambdasdf:sdf['name'].count()))
 
 #### apply函数
 
-**修改**
+**分隔**
 
 ```py
 print(data['date'])
@@ -408,4 +441,26 @@ titanic.head()
 
 4.Pandas数据处理：缺失值处理、数据转换、数据聚合
 
- 5. Pandas数据文件读写：csv、excel、json、html等
+5.Pandas数据文件读写：csv、excel、json、html等
+
+
+
+### 杂类
+
+#### 1、去除索引多余内容
+
+```py
+data = pd.read_excel('../pyecharts/数据集/timeline.xlsx',index_col=0) # 将月份设置为索引
+```
+
+![9](图\9.png)
+
+删除年份
+
+```py
+data.index = data.index.str.split('年').str[1]
+```
+
+效果：
+
+![10](C:\Users\admin\Desktop\笔记\pandas\图\10.png)
